@@ -209,8 +209,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   width: 20,
                                                   height: 10,
                                                   child: CachedNetworkImage(
-                                                    imageUrl:
-                                                    "https://img.favpng.com/23/7/11/abu-dhabi-dubai-flag-of-the-united-arab-emirates-national-flag-png-favpng-PiKxGp531xvY3D5PsBj5qfwh9.jpg",
+                                                    imageUrl: posobj.data![0].language![index].lang.toString() == "بداية"
+                                                    ?"https://img.favpng.com/23/7/11/abu-dhabi-dubai-flag-of-the-united-arab-emirates-national-flag-png-favpng-PiKxGp531xvY3D5PsBj5qfwh9.jpg"
+                                                    : posobj.data![0].language![index].lang.toString() == "start"
+                                                        ?"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png"
+                                                        :"https://cdn.britannica.com/46/3346-004-D3BDE016/flag-symbolism-Pakistan-design-Islamic.jpg",
                                                     placeholder: (context, url) =>
                                                     new CircularProgressIndicator(),
                                                     errorWidget: (context, url, error) =>
@@ -385,9 +388,8 @@ Future<pos> fetchUsers() async {
   try {
     Response response = await Dio().get('https://api.jsonserve.com/0bSq_-');
     if (response.statusCode == 200) {
-      print(response.data.toString());
 
-      return pos.fromJson(response.data);;
+      return pos.fromJson(response.data);
     } else {
       throw Exception('Failed to load users');
     }
